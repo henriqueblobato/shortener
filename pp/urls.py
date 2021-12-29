@@ -24,14 +24,19 @@ from api.models import Redirect
 def get_all_redirects():
     r = Redirect.objects.all()
     return [
-        path(f"{i.get('short_url')}/", Redirect.as_view())
+        path(f"{i.get('short_url')}/", RedirectView.as_view())
         for i in r.values()
     ]
 
+
+redirects_list = get_all_redirects()
+print(redirects_list)
+
 urlpatterns = [
+    path('', ShortenerView.as_view()),
     path('admin/', admin.site.urls),
     path('short/', ShortenerView.as_view()),
-] + get_all_redirects()
+] + redirects_list
 
 
 # --> google.com --> /a
