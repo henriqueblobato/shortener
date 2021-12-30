@@ -1,1 +1,1 @@
-web: python3 manage.py runserver --noreload
+web: python manage.py runserver --port=80
