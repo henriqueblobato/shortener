@@ -1,30 +1,28 @@
+import string
+from django.utils.crypto import get_random_string
+
 from django.db import models
 
 
 class Redirect(models.Model):
-    url = models.CharField(max_length=255)
-    short_url = models.CharField(max_length=255)
-    # user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    clicks = models.IntegerField(default=0, blank=True)
+    short_url = models.CharField(max_length=5000,
+                                 unique=True,
+                                 db_index=True,
+                                 primary_key=True,
+                                 editable=False,
+                                 default=get_random_string(
+                                     length=5,
+                                     allowed_chars=string.ascii_letters + string.digits))
+    url = models.CharField(max_length=5000)
+    clicks = models.IntegerField(default=0, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
-    # contains the raw URL
-    # contains the redirect url
-    # user
-    # how many times the user has clicked on the link (int)
-    # date(default=now, default=auto_now)
-    pass
+    # user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.url}'
+        return self.url
 
-    def __dict__(self):
-        return {
-            'url': self.url,
-            'short_url': self.short_url,
-            'clicks': self.clicks,
-            'created_at': self.created_at
-        }
+    def generate_short_url(self):
+        return get_random_string(length=5, allowed_chars=string.ascii_letters + string.digits)
 
     class Meta:
         db_table = 'redirects'

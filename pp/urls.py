@@ -14,30 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 
 from api.views import ShortenerView, RedirectView
 
-from api.models import Redirect
-
-
-def get_all_redirects():
-    r = Redirect.objects.all()
-    return [
-        path(f"{i.get('short_url')}/", RedirectView.as_view())
-        for i in r.values()
-    ]
-
-
-redirects_list = get_all_redirects()
-print(redirects_list)
 
 urlpatterns = [
     path('', ShortenerView.as_view()),
     path('admin/', admin.site.urls),
-    path('short/', ShortenerView.as_view()),
-] + redirects_list
-
-
-# --> google.com --> /a
-# /a --> google.com
+    re_path(r'^\w{5}/$', RedirectView.as_view()),
+]
