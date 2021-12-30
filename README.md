@@ -10,8 +10,9 @@ source env/bin/activate
 ```
 pip install -r requirements.txt
 ```
-### Run
+### Migrate database and run server
 ```
+python manage.py migrate
 python manage.py runserver 0.0.0.0:8000
 ```
 
