@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG = True
 DEBUG = os.environ.get('DEBUG') == True
 
-ALLOWED_HOSTS = ['https://shortener-iktech.herokuapp.com/']
+ALLOWED_HOSTS = ['shortener-iktech.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
