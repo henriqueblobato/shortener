@@ -1,1 +1,1 @@
-worker: python3 manage.py runserver --noreload
+web: python3 manage.py runserver --noreload
